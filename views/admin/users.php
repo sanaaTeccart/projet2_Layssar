@@ -51,7 +51,7 @@ global $pageData;
             <div>
 
                 <div class="d-inline">
-                <!-- <a href="suprimerClient.php?id=<?php echo $user['id']; ?>"> -->
+                <a href="?id=<?php echo $user['id']; ?>">
                 <span class="badge text-bg-danger fs-12">Supprimer</span>
                     </a>
 
