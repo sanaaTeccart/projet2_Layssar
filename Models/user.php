@@ -4,7 +4,8 @@ require_once('./utils/Crud.php');
 
 class User extends Crud  {
     
-        public $id;
+
+        public $email;
         public $token;
         public $username;
         public $fname;
@@ -13,7 +14,7 @@ class User extends Crud  {
         public $billing_address_id;
         public $shipping_address_id;
         public $role_id;
-        public $email;
+      
         public $table = 'user';
     
         public function getUsers()
@@ -41,8 +42,9 @@ class User extends Crud  {
             /* 
             if Product data 
             */
-           
-            $request = "INSERT INTO $this->table (email, token, username, fname, lname, pwd, billing_adress_id, shipping_address_id, role_id) VALUES (:email, :token, :username, :fname, :lname, :pwd, :billing_adress_id, :shipping_address_id, :role_id)";
+            $request = " INSERT INTO user (email, token, username, fname, lname, pwd, billing_address_id, shipping_address_id, role_id) VALUES (:email, :token, :username, :fname, :lname, :pwd, :billing_address_id, :shipping_address_id, :role_id)";
+
+            //$request = "INSERT INTO $this->table (email, token, username, fname, lname, pwd, billing_address_id, shipping_address_id, role_id) VALUES (:email, :token, :username, :fname, :lname, :pwd, :billing_address_id, :shipping_address_id, :role_id)";
             return parent::add($request, $userdata);
         }
     
@@ -71,7 +73,7 @@ class User extends Crud  {
     
         public function deleteUser($id)
         {
-            return parent::delete('user',$id);
+            return parent::delete($this->table,$id);
         }
     }
     

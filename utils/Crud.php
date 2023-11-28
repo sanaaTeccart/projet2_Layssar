@@ -7,7 +7,7 @@ class Crud
         $host = "localhost";
         $db = "ecom2_project";
         $user = "root";
-        $password = "";
+        $password = ""; 
 
         $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
@@ -46,7 +46,7 @@ class Crud
     }
 
     // methode pour ajouter un item 
-    public function add(string $request, array $itemdata): int|bool
+    public function add( $request, $itemdata): int|bool
     {
         $PDOStatement = $this->connexion->prepare($request);
         foreach ($itemdata as $key => $value) {
@@ -56,7 +56,18 @@ class Crud
                 $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_STR);
             }
         }
+
+
+
+        echo "SQL Query: $request\n";
+        print_r($itemdata);
+
+
+
         $PDOStatement->execute();
+        echo $request;
+        print_r($itemdata);
+       
         if ($PDOStatement->rowCount() <= 0) {
             return false;
         }

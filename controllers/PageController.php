@@ -39,11 +39,13 @@ class PageController
             //Va me chercher mes users 
             $objUserController = new UserController;
     
+            
             $users = $objUserController->getAllUsers();
-    
+            $userDel = $objUserController->DeleteUserById();
             global $pageData;
             $pageData= [
-                'users' => $users
+                'users' => $users,
+                'user'=>  $userDel
             ];
             // boucle a travers mon tableau de user
             // fait moi une liste avec mes produits
@@ -56,9 +58,25 @@ class PageController
 
     public function signup()
     {
-        // $viewData = ['getdata'];
-         session_start();
-        // $_SESSION['viewData'] = $viewData;
+        $objUserController = new UserController;
+        $userdata =
+         [
+            //'email','token', 'username', 'fname', 'lname', 'pwd','billing_address_id', 'shipping_address_id', 'role_id'];
+            'email' => $userdata['email'],
+            'token' => $userdata['token'], // You might want to generate a token
+            'username' => $userdata['username'],
+            'fname' => $userdata['fname'],
+            'lname' => $userdata['lname'],
+            'pwd' => $userdata['pwd'], // Store the hashed password
+            'billing_adress_id' => $userdata['billing_address_id'],
+            'shipping_address_id' => $userdata['shipping_address_id'],
+            'role_id' => $userdata['role_id']
+        ];
+
+        $objUserController->ajouterUser( $userdata);
+     
+
+        
 
         require_once './views/pages/signup.php';
 
@@ -77,4 +95,5 @@ class PageController
     {
         require_once './utils/results.php';
     }
+
 }
