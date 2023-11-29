@@ -8,7 +8,7 @@ require_once('./client/includes/header.php');
 //require_once ("./includes/nav.php");
 
 global $pageData;
-var_dump($pageData);
+//var_dump($pageData);
 
 
 ?>
@@ -60,6 +60,7 @@ var_dump($pageData);
 
                         <!-- afficher prix -->
                         <div>
+                        <h6 class="text-1100"><?php echo $product['name']; ?></h6>
                           <h3 class="text-1100"><?php echo $product['price']; ?>CAD</h3>
 
                         </div>

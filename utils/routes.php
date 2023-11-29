@@ -12,11 +12,7 @@ switch ($explodeUrl[3]) {
         $page->products();
 
         break;
-    case 'results':
-        $page = new PageController;
-        $page->results();
-
-        break;
+   
     case 'cart':
         $page = new PageController;
         $page->cart();
@@ -29,12 +25,16 @@ switch ($explodeUrl[3]) {
     case 'login':
         $page = new PageController;
         $page->login();
+        // ou PageController::login
      break;
 
     case 'users':
         $page = new PageController;
         $page->users();
 
+    case 'user':
+        $page = new PageController;
+        $page->users();
 
     default:
         $page = new PageController;

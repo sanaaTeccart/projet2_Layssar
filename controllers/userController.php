@@ -9,7 +9,7 @@ class UserController
     return $objUser->getUsers();
   }
 
-  #get product by id
+  #get user by id
   public function getUserById()
   {
     $objUser = new User;
@@ -30,7 +30,9 @@ class UserController
     return $objUser->getUserById($id);
   }
 
-  #get product by id
+
+  
+ #delete userbyID
   public function DeleteUserById(){
   $objUser = new User;
   $id = isset($_GET['id']) ? $_GET['id'] : null;
@@ -41,6 +43,9 @@ class UserController
   return null;
   }
 
+
+
+
   #create user
   function ajouterUser($userdata){
     $objUser = new User;
@@ -48,9 +53,10 @@ class UserController
     //appeler la methode add avec la requet et usedata
     return $objUser->ajouterUser($userdata);
 
-    
+
   
   }
+  
 }
 
 

@@ -2,50 +2,6 @@
 require_once('./client/includes/header.php');
 require_once('./client/includes/nave.php');
 
-if (isset($_POST['envoyer'])) {
-    // recuperation des elements de mon formulaire
-    $email = $_POST['email'];
-    $token = $_POST['token'];
-    $username = $_POST['username'];
-    $fname = $_POST['fname'];
-    $lname = $_POST['lname'];
-    $pwd = $_POST['pwd'];
-    $billing_address_id = $_POST['billing_address_id'];
-    $shipping_address_id = $_POST['shipping_address_id'];
-    $role_id = $_POST['role_id'];
-
-
-
-    // if (empty($nom) ||empty($email)|| empty($password)) {
-    //     echo 'Remplir tous les champs';
-    //    }
-    //    else{
-    //         if ($password === $c_password) {
-
-    //             $resultat=inscription($nom,$prenom , $email, $telephone, $date_naissance, $password ,$c_password);
-    //             if($resultat){
-
-    //             login( $email, $password);
-
-
-    //          echo "Utilisateur inscrits";
-
-
-    //             }
-    //             else{
-    //              echo "Une erreur est survenue";
-    //             }
-
-
-
-    //         }
-    //     }
-
-
-
-
-
-}
 
 ?>
 <!DOCTYPE html>
@@ -71,6 +27,13 @@ if (isset($_POST['envoyer'])) {
 
             <form method="post">
                 <div class="container mb-1">
+
+                <div class="mb-1">
+                        <label for="exampleInputEmail1" class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" id="exampleInputEmail1">
+                    </div>
+
+                   
                     <div class="mb-1">
                         <label for="username" class="form-label">User Name</label>
                         <input type="text" name="username" class="form-control" id="username">
@@ -83,35 +46,16 @@ if (isset($_POST['envoyer'])) {
                         <label for="lname" class="form-label">Last Name</label>
                         <input type="text" name="lname" class="form-control" id="lname">
                     </div>
-                    <div class="mb-1">
-                        <label for="exampleInputEmail1" class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" id="exampleInputEmail1">
-                    </div>
+                    
 
-                    <div class="mb-1">
+                   <div class="mb-1">
                         <label for="pwd" class="form-label">Password</label>
                         <input type="password" name="pwd" class="form-control" id="pwd">
                     </div>
 
-                    <div class="mb-1">
-                        <label for="token" class="form-label">Token</label>
-                        <input type="hidden" name="csrf_token" class="form-control" id="token">
-                    </div>
-
                 </div>
-                <div class="mb-1">
-                    <label for="billing_address_id" class="form-label">Billing address</label>
-                    <input type="Int" name="billing_address_id" class="form-control" id="billing_address_id">
-                </div>
-                <div class="mb-1">
-                    <label for="shipping_address_id" class="form-label">Shipping address</label>
-                    <input type="Int" name="shipping_address_id" class="form-control" id="shipping_address_id">
-                </div>
-
-                <div class="mb-1">
-                    <label for="role_id" class="form-label">Role</label>
-                    <input type="Int" name="role_id" class="form-control" id="role">
-                </div>
+              
+            
                 <br>
                 <div class="d-grid gap-2">
                     <button type="submit" name="envoyer" class="btn btn-primary">Signup</button>
@@ -119,9 +63,7 @@ if (isset($_POST['envoyer'])) {
 
                 </div>
             </form>
-            <div class="text-center mt-3">
-                <a class="text-center" href="login.php">Login</a>
-            </div>
+           
         </section>
 
 
