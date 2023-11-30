@@ -59,14 +59,11 @@ class Crud
 
 
 
-        echo "SQL Query: $request\n";
-        print_r($itemdata);
-
-
+        // echo "SQL Query: $request\n";
+        // print_r($itemdata);
 
         $PDOStatement->execute();
-        echo $request;
-        print_r($itemdata);
+    
        
         if ($PDOStatement->rowCount() <= 0) {
             return false;

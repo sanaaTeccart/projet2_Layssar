@@ -24,11 +24,7 @@ class Product extends Crud  {
             return $this->getById($this->table, $id);
         }
     
-    public function getByName($name) 
-    {
-    
-       // return $this->getByOneColumn($this->table, $name);
-    }
+ 
     
         public function ajouterProduct($productdata)
         {

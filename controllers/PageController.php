@@ -1,6 +1,7 @@
 <?php
 require_once 'ProductController.php';
 require_once 'userController.php';
+require_once 'ValidationController.php';
 
 class PageController
 {
@@ -67,84 +68,121 @@ class PageController
     }
 
 
+    // public function signup()
+    // {
+
+
+    //     if (isset($_POST['envoyer'])) {
+    //         // recuperation des elements de mon formulaire
+    //         //valider les donnees recues
+    //          $fieldVrevalid=$isValid;
+    //          $userValidationData= $validationController::signup();
+    //         $fieldVrevalid= $userValidationData['isvalid'];
+            
+
+        
+
+    //         $email = $_POST['email'];
+    //          $username = $_POST['username'];
+    //         $fname = $_POST['fname'];
+    //         $lname = $_POST['lname'];
+    //         $pwd = $_POST['pwd'];
+
+
+
+
+    //          if (empty($email) ||empty( $username) ||empty($fname)|| empty($lname)||empty( $pwd)) { 
+              
+    //          echo 'Remplir tous les champs';
+             
+    //         require_once './views/pages/signup.php';
+
+    //            }
+    //            else{
+    //                if ($fieldVrevalid) {
+
+    //                  //si la validation fonctionne
+    //         $objUserController = new UserController;
+    //         $userParams =
+    //             [
+    //                 'email' => $email,
+    //             'username' => $username,
+    //                 'fname' => $fname,
+    //                 'lname' => $lname,
+    //                 'pwd' => $pwd,
+    //             ];
+
+    //         $objUserController->ajouterUser($userParams);
+
+
+
+
+    //         require_once './views/pages/login.php';
+    //     } else {
+
+
+    //         require_once './views/pages/signup.php';
+    //     }
+
+
+
+    //                 }
+                
+    //             }
+
+
+           
+    // }
+
+
+
     public function signup()
     {
-
-
         if (isset($_POST['envoyer'])) {
-            // recuperation des elements de mon formulaire
-            //valider les donnees recues
-            // $fieldVrevalid=true;
-            // $userValidationData= ValidationController signup
-            // $fieldVrevalid= $userValidationData['isvalid']
-
-
-
+            // Récupération des éléments du formulaire
             $email = $_POST['email'];
-
             $username = $_POST['username'];
             $fname = $_POST['fname'];
             $lname = $_POST['lname'];
             $pwd = $_POST['pwd'];
 
-
-
-
-            // if (empty($nom) ||empty($email)|| empty($pwd)) {
-            //     echo 'Remplir tous les champs';
-            //    }
-            //    else{
-            //         if ($pwd === $c_password) {
-
-            //             $resultat=singup($nom,$prenom , $email, $telephone, $date_naissance, $password ,$c_password);
-            //             if($resultat){
-
-            //             login( $email, $pwd);
-
-
-            //          echo "Utilisateur inscrits";
-
-
-            //             }
-            //             else{
-            //              echo "Une erreur est survenue";
-            //             }
-
-
-
-            //         }
-            //     }
-
-
-
-
-
-
-            //si la validat8on fonctionne
-            $objUserController = new UserController;
-            $userParams =
-                [
-                    'email' => $email,
+            // Création d'un tableau avec les données de l'utilisateur
+            $userData = [
+                'email' => $email,
                 'username' => $username,
-                    'fname' => $fname,
-                    'lname' => $lname,
-                    'pwd' => $pwd,
-                ];
+                'fname' => $fname,
+                'lname' => $lname,
+                'pwd' => $pwd,
+            ];
 
-            $objUserController->ajouterUser($userParams);
+            // Validation des données avec ValidationController
+            $validationController = new ValidationController;
+            $validationResult = $validationController->signup($userData);
 
+            if ($validationResult['isValid']) {
+                // Les données sont valides, procéder à l'inscription
+                $objUserController = new UserController;
+                $objUserController->ajouterUser($userData);
 
+                // Rediriger vers la page de connexion
+                require_once './views/pages/login.php';
+            } else {
+                // Les données ne sont pas valides, afficher les messages d'erreur
+                $errorMessages = $validationResult['messages'];
 
-
-            require_once './views/pages/login.php';
+                // Rediriger vers la page d'inscription avec les messages d'erreur
+                require_once './views/pages/signup.php';
+            }
         } else {
 
-
+            // Le formulaire n'a pas été soumis, afficher la page d'inscription
             require_once './views/pages/signup.php';
         }
     }
 
 
+
+        
 
     public function login()
     {
