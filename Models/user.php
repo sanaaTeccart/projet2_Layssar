@@ -66,7 +66,6 @@ class User extends Crud
 
         $userdata = [
             'email' => $userdata['email'],
-
             'username' => $userdata['username'],
             'fname' => $userdata['fname'],
             'lname' => $userdata['lname'],
@@ -79,28 +78,34 @@ class User extends Crud
 
 
 
-    // public function updateUser($userdata)
-    // {
-    //modifier par exp:email
-    //$this->email= $userdata['email'];
-    /* $userdata = [
+    public function modifierProfile($userdata)
+    {
+        $id = $_SESSION['user']['id'];
+   // Ajoutez l'ID à $userdata
+   $userdata['id'] = $id;
+   $objUser = new User;
+   //appeler la methode update avec la requet et usedata
+   return $objUser->modifierProfile($userdata);
+     $userdata = [
                 
                 'email' => $this->email,
-                'token' => $this->token,
                 'username' => $this->username,
                 'fname' => $this->fname,
                 'lname' =>$this->lname,
-                'pwd' =>this->pwd,
-                'billing_address_id' =>$this->billing_address_id
-                'shipping_address_id' =>$this->shipping_address_id
-                'role_id' =>$this->$role_id 
-            ]; */
+                'pwd' =>$this->pwd,
+                
+            ]; 
 
-    //     var_dump($userdata);
-    //     echo'</br></br>';
-    //     $request = "UPDATE user SET email = :email,username = :username, fname = :fname, lname = :lname,pwd= :pwd, billing_address_id =: billing_address_id, shipping_address_id=: shipping_address_id,role_id=:role_id WHERE id = :id";
-    //     parent::updateById($request, $userdata);
-    // };
+        var_dump($userdata);
+        echo'</br></br>';
+        $request = "UPDATE user SET email = :email,username = :username, fname = :fname, lname = :lname,pwd= :pwd  WHERE id = :id";
+        return parent::updateById($request, $userdata);
+
+
+
+    }
+
+
 
     public function deleteUser($id)
     {

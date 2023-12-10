@@ -41,7 +41,7 @@ class Crud
         $PDOStatement = $this->connexion->prepare("SELECT * FROM $table WHERE id = :id"); // preparation de rqt sql pour affichage 
         $PDOStatement->bindParam(':id', $id, PDO::PARAM_INT);
         $PDOStatement->execute();
-        $data = $PDOStatement->fetchAll(PDO::FETCH_ASSOC);
+        $data = $PDOStatement->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
 
@@ -85,30 +85,33 @@ class Crud
     }
 
     
-//     public function updateHorlogeById($request, $itemData)
-//     {
-//         //requete sql pour modification dans la table itemData 
-//         $PDOStatement = $this->connexion->prepare($request);
+   public function updateById($request, $itemData)
+     {
+         //requete sql pour modification dans la table itemData 
+       $PDOStatement = $this->connexion->prepare($request);
 // var_dump($itemData);
 
-// echo'</br></br>';
-//         foreach ($itemData as $key => $value) {
-            
-//             if (is_numeric($value)) {
-//                 var_dump('je suis dans mon if ma value est : '. $value);
-//                 $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_INT); 
-//             } else if (is_string($value)) {
-//                 var_dump('je suis dans mon else ma value est : '. $value);
-//                 $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_STR);
-            
-//             }else{
-//                 var_dump('Houston on a un pbKey : '.$key.' Value : '.$value);
-//                 }
-//         }
-//         $PDOStatement->execute();
+echo'</br></br>';
+        foreach ($itemData as $key => $value) {
+            if ($key !== 'id') {
+           if (is_numeric($value)) {
+               var_dump('je suis dans mon if ma value est : '. $value);
+                 $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_INT); 
+             } else if (is_string($value)) {
+                 var_dump('je suis dans mon else ma value est : '. $value);
+                 $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_STR);
+             }
+             }
+            }
+            $PDOStatement->bindValue(':id', $itemData['id'], PDO::PARAM_INT);
 
-//         var_dump($result);
-//     }
+        $PDOStatement->execute();
+
+      //  var_dump($result);
+    }
+
+
+    
 
     public function __destruct()
     {

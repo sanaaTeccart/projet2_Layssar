@@ -22,7 +22,7 @@ switch ($explodeUrl[3]) {
 
     case 'product':
 
-        var_dump($explodeUrl[4]);
+       // var_dump($explodeUrl[4]);
         // Récupérer l'ID du produit à partir de la requête GET
         $productId = isset($explodeUrl[4]) ? $explodeUrl[4] : null;
         if ($productId) {
@@ -47,19 +47,28 @@ switch ($explodeUrl[3]) {
         break;
 
 
-    case 'login':
-        $page = new PageController;
-        $page->login();
-        // ou PageController::login
-        break;
+    // case 'login':
+    //     $page = new PageController;
+    //     $page->login();
+    //     // ou PageController::login
+    //     break;
 
     case 'users':
         $page = new PageController;
         $page->users();
+        break;
 
     case 'user':
         $page = new PageController;
         $page->users();
+
+        break;
+
+        case 'profile':
+            $page = new PageController;
+            $page->profile();
+      echo " je suis dans profile";
+            break;
 
     default:
         $page = new PageController;

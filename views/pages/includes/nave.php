@@ -4,9 +4,9 @@
   <div class="ecommerce-topbar">
     <nav class="navbar navbar-expand-lg navbar-light px-0">
       <div class="row gx-0 gy-2 w-100 flex-between-center">
-        <div class="col-auto"><a class="text-decoration-none" href="../../../index.html">
+        <!-- <div class="col-auto"><a class="text-decoration-none" href="../../../index.html">
             
-          </a></div>
+          </a></div> -->
         <div class="col-auto order-md-1">
           <ul class="navbar-nav navbar-nav-icons flex-row me-n2">
             <li class="nav-item d-flex align-items-center">
@@ -33,7 +33,7 @@
             
             
             
-            <li class="nav-item dropdown"><a class="nav-link px-2" id="navbarDropdownUser" href="monprofil.php" role="button" ><span class="text-700" data-feather="user" style="height:20px;width:20px;"></span></a>
+            <li class="nav-item dropdown"><a class="nav-link px-2" id="navbarDropdownUser" href="profile" role="button" ><span class="text-700" data-feather="user" style="height:20px;width:20px;"></span></a>
               <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300 mt-2" aria-labelledby="navbarDropdownUser">
                 <div class="card position-relative border-0">
                   <div class="card-body p-0">
@@ -94,9 +94,9 @@
 <nav class="ecommerce-navbar navbar-expand navbar-light bg-white justify-content-between">
 <div class="container-small d-flex flex-between-center" data-navbar="data-navbar">
   <ul class="navbar-nav justify-content-end align-items-center">
-    <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link ps-0 active" href="acceuil.php">Home</a></li>
+    <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link ps-0 active" href="product.php">Home</a></li>
     <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href=".php">Mes commandes</a></li>
-<?php if( isset( $_SESSION['panier']))
+<?php if( isset( $_SESSION['cart']))
 
    {?> <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="cart.php">Checkout</a></li>
   <?php }

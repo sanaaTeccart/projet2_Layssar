@@ -56,6 +56,14 @@ class UserController
 
   
   }
+
+  #update profile
+  function modifierProfile($userdata){
+    $id = $_SESSION['user']['id'];
+    $objUser = new User;
+    //appeler la methode update avec la requet et usedata
+    return $objUser->modifierProfile($userdata);
+  }
   
 }
 

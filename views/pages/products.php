@@ -1,6 +1,6 @@
 <?php
-require_once('./client/includes/header.php');
-require_once('./client/includes/nave.php');
+//  require_once('./views/pages/includes/header.php');
+// require_once('./pages/includes/nave.php');
 
 
 
@@ -96,6 +96,3 @@ global $pageData;
 
 
 
-<?php
-require_once('./client/includes/footer.php');
-?>

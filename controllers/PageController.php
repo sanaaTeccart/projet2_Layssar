@@ -31,8 +31,9 @@ class PageController
         $product = $objProductController->getProductById($productId);
 
         global $pageData;
-        $pageData =
-            ['product' => $product];
+        $pageData = [
+            'product' => $product
+        ];
         require('./views/pages/product.php');
 
 
@@ -79,7 +80,7 @@ class PageController
             'users' => $users,
         ];
         // boucle a travers mon tableau de user
-        // fait moi une liste avec mes produits
+        
 
 
 
@@ -157,8 +158,68 @@ class PageController
 
 
 
-    public function login()
+    // public function login()
+    // {
+    //     $objProductController = new ProductController;
+    //     $product = $objProductController->getProductById($Id);
+
+    //     global $pageData;
+    //     $pageData = [
+    //         'product' => $product
+    //     ];
+    //     require('./views/pages/product.php');
+    //     require_once './views/pages/login.php';
+    // }
+
+
+    public function profile()
     {
-        require_once './views/pages/login.php';
+
+
+        if (isset($_POST['envoyer'])) {
+            // Récupération des éléments du formulaire
+            $email = $_POST['email'];
+            $username = $_POST['username'];
+            $fname = $_POST['fname'];
+            $lname = $_POST['lname'];
+            $pwd = $_POST['pwd'];
+
+            // Création d'un tableau avec les données de l'utilisateur
+            $userData = [
+                'email' => $email,
+                'username' => $username,
+                'fname' => $fname,
+                'lname' => $lname,
+                'pwd' => $pwd,
+            ];
+
+            $validationController = new ValidationController;
+            $validationResult = $validationController->signup($userData);
+
+            if ($validationResult['isValid']) {
+                // Les données sont valides, procéder à l'inscription
+                $objUserController = new UserController;
+                $objUserController->modifierProfile($userData);
+
+                // Rediriger vers la page de users
+                require_once './views/pages/users.php';
+            } else {
+                // Les données ne sont pas valides, afficher les messages d'erreur
+                $errorMessages = $validationResult['messages'];
+
+                // Rediriger vers la page profile avec les messages d'erreur
+                require_once './views/pages/profile.php';
+            }
+        } 
+
+   
+
+    
+        
+
+
     }
+
+
+
 }
