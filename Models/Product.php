@@ -38,6 +38,7 @@ class Product extends Crud  {
         }
     
         public function updateProduct($productdata)
+        
         {
             $this->name = $productdata['name'];
             /* $productdata = [
@@ -63,10 +64,6 @@ class Product extends Crud  {
         }
     }
     
-
-    // public function test () {
-    //     $array = $this->getAll('product');
-    // }
 
 ?>
 

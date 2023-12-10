@@ -32,34 +32,45 @@ class User extends Crud
         return $this->getById($this->table, $id);
     }
 
-    // public function getByemail($email) {
+    public function getUserByUsername(string $username)
+    {
 
-    // return $this->getByOneColumn($this->table, $email);
+        return $this->getByOneColumn($this->table, 'username', $username);
+    }
+
+    // public function getUser()
+    // {
+    //     // Requête
+    //     $request = "SELECT * FROM user WHERE username=:username AND pwd=:pwd";
+
+    //     // Paramètres de la requête
+    //     $params = [
+    //         'username' => $this->table['username'],
+    //         'pwd' => $this->table['pwd'],
+    //     ];
+    //     var_dump($params);
+    //     // Exécutez la requête et renvoyez le résultat
+    //      return $this->queryWithParams($request, $params);
+    //     //return $this->getByOneColumn($request, $params);
     // }
 
-    public function ajouterUserAddress($addressParams)
+
+    public function updateToken($id, $newToken)
     {
-        // Insérer l'adresse et retourner l'ID de l'adresse
-        $request = "INSERT INTO address (street_name, street_nb,city, province, zipcode, country ) VALUES (:street_name, :street_nb, :city, :province, :zipcode, :country)";
+
+        // Requête de mise à jour du token
+        $request = "UPDATE user SET token = :token WHERE id = :id";
 
 
-
-        return parent::add($request, $addressParams);
+        $PDOStatement = $this->connexion->prepare($request);
+        $PDOStatement->bindValue(':token', $newToken, PDO::PARAM_STR);
+        $PDOStatement->bindValue(':id', $id, PDO::PARAM_INT);
+        $result = $PDOStatement->execute();
     }
-
-    public function ajouterUserRole($roleParams)
-    {
-        // Insérer le role et retourner l'ID de l'adresse
-        $request = "INSERT INTO role (name, description ) VALUES (:name, :description)";
-        $roleParams = [];
-        return parent::add($request, $roleParams);
-    }
-
-
 
     public function ajouterUser($userdata)
     {
-       
+
         // Insérer l'utilisateur avec les ID 
         $request = " INSERT INTO $this->table (email, token, username, fname, lname, pwd, billing_address_id, shipping_address_id, role_id) VALUES (:email, '', :username, :fname, :lname, :pwd, 1, 1, 3)";
 
@@ -72,38 +83,29 @@ class User extends Crud
             'pwd' => $userdata['pwd'],
 
         ];
+
         return parent::add($request, $userdata);
     }
 
 
 
 
-    public function modifierProfile($userdata)
+
+    public function updateProfile($userdata)
     {
+        // Récupérer l'ID de l'utilisateur actuel
         $id = $_SESSION['user']['id'];
-   // Ajoutez l'ID à $userdata
-   $userdata['id'] = $id;
-   $objUser = new User;
-   //appeler la methode update avec la requet et usedata
-   return $objUser->modifierProfile($userdata);
-     $userdata = [
-                
-                'email' => $this->email,
-                'username' => $this->username,
-                'fname' => $this->fname,
-                'lname' =>$this->lname,
-                'pwd' =>$this->pwd,
-                
-            ]; 
 
-        var_dump($userdata);
-        echo'</br></br>';
-        $request = "UPDATE user SET email = :email,username = :username, fname = :fname, lname = :lname,pwd= :pwd  WHERE id = :id";
+        // Ajoutez l'ID à $userdata
+        $userdata['id'] = $id;
+
+        // Définir la requête SQL
+        $request = "UPDATE user SET email = :email, username = :username, fname = :fname, lname = :lname, pwd = :pwd WHERE id = :id";
+
+        // Appeler la méthode updateById avec la requête et $userdata
         return parent::updateById($request, $userdata);
-
-
-
     }
+
 
 
 
@@ -111,6 +113,27 @@ class User extends Crud
     {
         return parent::delete($this->table, $id);
     }
+
+
+    public function getUserRole($userId)
+    {
+        // Vérifier si $userId est null
+        if ($userId === null && $userId == 3) {
+            return null; // Ou une valeur par défaut 
+        }
+
+        $userData = $this->getById('users', $userId);
+        return $userData['role_id'] ?? null;
+    }
+
+
+    // public function getByBrand($brand) {
+
+    //     return $this->getByOneColumn($this->table, $brand);
+    // }
+
+
+
 }
 
 

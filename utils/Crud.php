@@ -7,18 +7,17 @@ class Crud
         $host = "localhost";
         $db = "ecom2_project";
         $user = "root";
-        $password = ""; 
+        $password = "";
 
         $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
         try {
             $this->connexion = new PDO($dsn, $user, $password);
-            
             if ($this->connexion) {
                 echo "Connected to the $db database successfully";
             }
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            echo "Connection failed: " . $e->getMessage();
         }
     }
 
@@ -26,8 +25,10 @@ class Crud
      * methode pour récupérer toutes les données d'une table 
      * @param string $table
      * @return array
-    */
-    public function getAll(string $table):array
+     */
+
+
+    public function getAll(string $table): array
     {
 
         $PDOStatement = $this->connexion->query("SELECT * FROM $table ORDER BY id ASC");
@@ -36,7 +37,7 @@ class Crud
     }
 
     // methode pour un élément d'une table avec son id 
-    public function getById(string $table,int $id):array
+    public function getById(string $table, int $id): array
     {
         $PDOStatement = $this->connexion->prepare("SELECT * FROM $table WHERE id = :id"); // preparation de rqt sql pour affichage 
         $PDOStatement->bindParam(':id', $id, PDO::PARAM_INT);
@@ -45,8 +46,11 @@ class Crud
         return $data;
     }
 
+
+
+
     // methode pour ajouter un item 
-    public function add( $request, $itemdata): int|bool
+    public function add($request, $itemdata): int|bool
     {
         $PDOStatement = $this->connexion->prepare($request);
         foreach ($itemdata as $key => $value) {
@@ -63,15 +67,15 @@ class Crud
         // print_r($itemdata);
 
         $PDOStatement->execute();
-    
-       
+
+
         if ($PDOStatement->rowCount() <= 0) {
             return false;
         }
         return $this->connexion->lastInsertId();
     }
 
-    public function delete(string $table,int $id): string
+    public function delete(string $table, int $id): string
     {
         $element = $this->getById($table, $id);
         if ($element) {
@@ -84,34 +88,63 @@ class Crud
         }
     }
 
-    
-   public function updateById($request, $itemData)
-     {
-         //requete sql pour modification dans la table itemData 
-       $PDOStatement = $this->connexion->prepare($request);
-// var_dump($itemData);
 
-echo'</br></br>';
+    public function updateById($request, $itemData)
+    {
+        //requete sql pour modification dans la table itemData 
+        $PDOStatement = $this->connexion->prepare($request);
+        
         foreach ($itemData as $key => $value) {
             if ($key !== 'id') {
-           if (is_numeric($value)) {
-               var_dump('je suis dans mon if ma value est : '. $value);
-                 $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_INT); 
-             } else if (is_string($value)) {
-                 var_dump('je suis dans mon else ma value est : '. $value);
-                 $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_STR);
-             }
-             }
+                if (is_numeric($value)) {
+                    //var_dump('je suis dans mon if ma value est : ' . $value);
+                    $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_INT);
+                } else if (is_string($value)) {
+                    //var_dump('je suis dans mon else ma value est : ' . $value);
+                    $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_STR);
+                }
             }
-            $PDOStatement->bindValue(':id', $itemData['id'], PDO::PARAM_INT);
-
-        $PDOStatement->execute();
-
-      //  var_dump($result);
+        }
+        $PDOStatement->bindValue(':id', $itemData['id'], PDO::PARAM_INT);
+        try {
+            $PDOStatement->execute();
+        } catch (PDOException $e) {
+            echo 'Erreur d\'exécution de la requête : ' . $e->getMessage();
+        }
+        //  var_dump($result);
     }
 
 
-    
+
+    public function getByOneColumn($table, $col, $param)
+    {
+        $PDOStatement = $this->connexion->prepare("SELECT * FROM $table WHERE $col = :param"); // preparation de rqt sql pour affichage 
+        $PDOStatement->bindParam(':param', $param, PDO::PARAM_STR);
+        $PDOStatement->execute();
+        $data = $PDOStatement->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+    }
+
+
+    // protected function queryWithParams($query, $params)
+    // {
+    //     $PDOStatement = $this->connexion->prepare($query);
+
+    //     foreach ($params as $key => $value) {
+    //         if (is_int($value)) {
+    //             $PDOStatement->bindValue($key, $value, PDO::PARAM_INT);
+    //         } else {
+    //             $PDOStatement->bindValue($key, $value, PDO::PARAM_STR);
+    //         }
+    //     }
+
+    //     $PDOStatement->execute();
+    //     return $PDOStatement->fetch(PDO::FETCH_ASSOC);
+    // }
+
+
+
+
 
     public function __destruct()
     {

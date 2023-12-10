@@ -1,4 +1,5 @@
 <?php
+//session_start();
 require_once './controllers/PageController.php';
 $url = $_SERVER['REQUEST_URI'];
 
@@ -21,9 +22,7 @@ switch ($explodeUrl[3]) {
         //     break;
 
     case 'product':
-
-       // var_dump($explodeUrl[4]);
-        // Récupérer l'ID du produit à partir de la requête GET
+ // Récupérer l'ID du produit à partir de la requête GET
         $productId = isset($explodeUrl[4]) ? $explodeUrl[4] : null;
         if ($productId) {
             $page = new PageController;
@@ -47,28 +46,52 @@ switch ($explodeUrl[3]) {
         break;
 
 
-    // case 'login':
-    //     $page = new PageController;
-    //     $page->login();
-    //     // ou PageController::login
-    //     break;
+    case 'login':
+        $page = new PageController;
+        $page->login();
+        // ou PageController::login
+
+        break;
 
     case 'users':
         $page = new PageController;
-        $page->users();
+        $userId = isset($explodeUrl[4]) ? $explodeUrl[4] : null;
+        if (isset($_SESSION['auth']['role_id']) && ($_SESSION['auth']['role_id'] === 2 || $_SESSION['auth']['role_id'] === 1)) {
+
+            if ($userId) {
+                $page->deleteUserById($explodeUrl[4]);
+            } else {
+                $page->users();
+            }
+        }
         break;
 
     case 'user':
+
+        $productId = isset($explodeUrl[4]) ? $explodeUrl[4] : null;
+        if ($userId) {
+            $page = new PageController;
+            $page->users($userId);
+            // echo " je suis dans user ";
+        } else {
+            echo "UserID is missing.";
+        }
+
         $page = new PageController;
         $page->users();
+        
 
         break;
 
-        case 'profile':
-            $page = new PageController;
-            $page->profile();
-      echo " je suis dans profile";
-            break;
+
+
+
+    case 'profile':
+        $page = new PageController;
+        $page->profile();
+
+        break;
+
 
     default:
         $page = new PageController;

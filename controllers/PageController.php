@@ -1,8 +1,10 @@
 <?php
 require_once 'ProductController.php';
 require_once 'userController.php';
+require_once 'ProfileController.php';
 require_once 'ValidationController.php';
-
+require_once './utils/Util.php';
+// require_once './utils/authToken.php';
 class PageController
 {
     //recuperer les donnees
@@ -18,8 +20,6 @@ class PageController
         $pageData = [
             'products' => $products
         ];
-        // boucle a travers mon tableau de produits
-        // fait moi un liste avec mes produits
         require('./views/pages/products.php');
     }
 
@@ -35,22 +35,6 @@ class PageController
             'product' => $product
         ];
         require('./views/pages/product.php');
-
-
-
-
-
-        //       if(isset($_POST['addCart'])){
-        //        $quantite = $_POST['qtty'];
-        //        if($quantite > 0){
-        //             addCart($id,$qtty);
-        //         }
-
-
-
-        // }
-
-
     }
 
 
@@ -62,10 +46,6 @@ class PageController
         echo '<h1>Page cart</h1>';
     }
 
-
-
-
-
     public function users()
     {
 
@@ -74,13 +54,12 @@ class PageController
 
 
         $users = $objUserController->getAllUsers();
-
         global $pageData;
         $pageData = [
             'users' => $users,
         ];
         // boucle a travers mon tableau de user
-        
+
 
 
 
@@ -88,27 +67,16 @@ class PageController
     }
 
 
-    public function user()
+    public function deleteUserById($id)
     {
+        // //Va me chercher mes users 
+        $obUserController = new UserController;
+        $userDel = $obUserController->deleteUserById($id);
+        global $pageData;
+        $pageData = ['user' =>  $userDel];
 
-        if (isset($_GET['id'])) {
-            // $productId = $_GET['id'];
-            // $objProductController = new ProductController;
-            // $product = $objProductController->getProductById($productId); 
-
-
-
-            //Va me chercher mes users 
-            $objUserController = new UserController;
-            $userDel = $objUserController->DeleteUserById();
-            global $pageData;
-            $pageData = ['user' =>  $userDel];
-        }
-        require_once './views/admin/users.php';
+        header("Location: users");
     }
-
-
-
 
     public function signup()
     {
@@ -119,6 +87,7 @@ class PageController
             $fname = $_POST['fname'];
             $lname = $_POST['lname'];
             $pwd = $_POST['pwd'];
+
 
             // Création d'un tableau avec les données de l'utilisateur
             $userData = [
@@ -134,12 +103,15 @@ class PageController
             $validationResult = $validationController->signup($userData);
 
             if ($validationResult['isValid']) {
+                //hash pwd 
+                $encodedPwd = Util::encodeString($userData['pwd']);
+                $userData['pwd'] = $encodedPwd;
                 // Les données sont valides, procéder à l'inscription
                 $objUserController = new UserController;
                 $objUserController->ajouterUser($userData);
 
                 // Rediriger vers la page de connexion
-                require_once './views/pages/login.php';
+                header("Location: login");
             } else {
                 // Les données ne sont pas valides, afficher les messages d'erreur
                 $errorMessages = $validationResult['messages'];
@@ -150,76 +122,97 @@ class PageController
         } else {
 
             // Le formulaire n'a pas été soumis, afficher la page d'inscription
-            require_once './views/pages/signup.php';
+            require_once('./views/pages/signup.php');
         }
     }
-
-
-
-
-
-    // public function login()
-    // {
-    //     $objProductController = new ProductController;
-    //     $product = $objProductController->getProductById($Id);
-
-    //     global $pageData;
-    //     $pageData = [
-    //         'product' => $product
-    //     ];
-    //     require('./views/pages/product.php');
-    //     require_once './views/pages/login.php';
-    // }
-
-
-    public function profile()
+    public function login()
     {
 
-
-        if (isset($_POST['envoyer'])) {
+        if (isset($_POST['connexion'])) {
             // Récupération des éléments du formulaire
-            $email = $_POST['email'];
             $username = $_POST['username'];
-            $fname = $_POST['fname'];
-            $lname = $_POST['lname'];
             $pwd = $_POST['pwd'];
 
             // Création d'un tableau avec les données de l'utilisateur
             $userData = [
-                'email' => $email,
                 'username' => $username,
-                'fname' => $fname,
-                'lname' => $lname,
                 'pwd' => $pwd,
             ];
 
+            // Validation des données avec ValidationController
+
             $validationController = new ValidationController;
-            $validationResult = $validationController->signup($userData);
+            $validationResult = $validationController->login($userData);
 
             if ($validationResult['isValid']) {
-                // Les données sont valides, procéder à l'inscription
-                $objUserController = new UserController;
-                $objUserController->modifierProfile($userData);
+                // Générer un token
+                $token = Util::generateToken();
+                session_start();
+                $_SESSION['auth'] = [
+                    'token' => $token,
+                    'user_id' => $validationResult['user']['id'],
+                    'role_id' => $validationResult['user']['role_id']
+                ];
 
-                // Rediriger vers la page de users
-                require_once './views/pages/users.php';
+
+                // update DB user token
+
+                $objuser = new User();
+                $objuser->updateToken($validationResult['user']['id'], $token);
+
+                /* 
+
+                $oUser = new User;
+                $userData = $oUser->getUserByUsername($userData['username']); */
+
+
+
+
+                if ($_SESSION['auth']['role_id'] != 3) {
+                    header("Location: users");
+                } else {
+                    header("Location: products");
+                    //require_once './views/pages/products.php';
+                }
             } else {
-                // Les données ne sont pas valides, afficher les messages d'erreur
-                $errorMessages = $validationResult['messages'];
 
-                // Rediriger vers la page profile avec les messages d'erreur
-                require_once './views/pages/profile.php';
+                global $pageData;
+                $pageData = [
+                    'errorMessage' => $validationResult['message']
+                ];
+                // Les données ne sont pas valides, afficher le message d'erreur
+                //$errorMessage = $validationResult['message'];
+
+                // Rediriger vers la page de signup avec le message d'erreur
+                require_once './views/pages/login.php';
             }
-        } 
-
-   
+        } else {
+            // Le formulaire n'a pas été soumis, afficher la page de connexion
+            require_once './views/pages/login.php';
+        }
+    }
 
     
-        
 
+    public function profile()
+    {
 
+        $profileController = new ProfileController;
+
+         if (isset($_POST['envoyer'])) {
+            // Si le formulaire a été soumis, mettre à jour le profil
+
+            $profile = $profileController->updateProfile($_POST);
+            global $pageData;
+            $pageData = [
+                'profile' => $profile
+            ];
+        } else {
+            // Afficher la page de profil
+            $profileController->displayProfile();
+        }
     }
 
 
-
+   
 }

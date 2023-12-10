@@ -1,19 +1,10 @@
 <?php
-//  require_once('./views/pages/includes/header.php');
-// require_once('./pages/includes/nave.php');
-
-
-
-
-
+require_once('./views/pages/includes/header.php');
+require_once('./views/pages/includes/nave.php');
 
 global $pageData;
 //var_dump($pageData);
-
-
 ?>
-
-
 <div class="ecommerce-homepage pt-5 mb-9">
 
 
@@ -93,6 +84,3 @@ global $pageData;
     <?php echo $errorMessage; ?>
   </div>
 <?php endif; ?>
-
-
-

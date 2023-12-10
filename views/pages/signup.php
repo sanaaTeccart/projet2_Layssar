@@ -1,9 +1,9 @@
 <?php
- require_once('./client/includes/header.php');
- require_once('./client/includes/nave.php');
-
-
+require_once('./views/pages/includes/header.php');
+require_once('./views/pages/includes/nave.php');
+global $viewData;
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -17,6 +17,7 @@
     <link href="public/css/sign-in.css" rel="stylesheet">
 </head>
 
+
 <body>
 
     <main class="form-signin w-100 m-auto border mt-4">
@@ -28,22 +29,22 @@
             <form method="post">
                 <div class="container mb-1">
 
-                <div class="mb-1">
+                    <div class="mb-1">
                         <label for="exampleInputEmail1" class="form-label">Email</label>
                         <input type="email" name="email" class="form-control" id="exampleInputEmail1">
-                        <?php if (isset($errorMessages['email'])): ?>
+                        <?php if (isset($errorMessages['email'])) : ?>
                             <div class="text-danger"><?php echo $errorMessages['email']; ?></div>
-                            <?php endif; ?>
-                </div>
+                        <?php endif; ?>
+                    </div>
 
-                   
+
                     <div class="mb-1">
                         <label for="username" class="form-label">User Name</label>
                         <input type="text" name="username" class="form-control" id="username">
-                        <?php if (isset($errorMessages['username'])): ?>
-                        <div class="text-danger"><?php echo $errorMessages['username']; ?></div>
+                        <?php if (isset($errorMessages['username'])) : ?>
+                            <div class="text-danger"><?php echo $errorMessages['username']; ?></div>
                         <?php endif; ?>
-                     </div>
+                    </div>
 
                     <div class="mb-1">
                         <label for="fname" class="form-label">Full Name</label>
@@ -53,20 +54,20 @@
                         <label for="lname" class="form-label">Last Name</label>
                         <input type="text" name="lname" class="form-control" id="lname">
                     </div>
-                    
 
-                   <div class="mb-1">
+
+                    <div class="mb-1">
                         <label for="pwd" class="form-label">Password</label>
                         <input type="password" name="pwd" class="form-control" id="pwd">
-                        <?php if (isset($errorMessages['password'])): ?>
-                     <div class="text-danger"><?php echo $errorMessages['password']; ?></div>
-                     <?php endif; ?>
-                    
+                        <?php if (isset($errorMessages['password'])) : ?>
+                            <div class="text-danger"><?php echo $errorMessages['password']; ?></div>
+                        <?php endif; ?>
+
                     </div>
 
                 </div>
-              
-            
+
+
                 <br>
                 <div class="d-grid gap-2">
                     <button type="submit" name="envoyer" class="btn btn-primary">Signup</button>
@@ -74,7 +75,7 @@
 
                 </div>
             </form>
-           
+
         </section>
 
 
@@ -83,5 +84,5 @@
 
 </html>
 <?php
-require_once('./client/includes/footer.php');
+
 ?>

@@ -1,6 +1,6 @@
 <?php
-require_once('./includes/header.php');
-require_once('./includes/nave.php');
+require_once('./views/pages/includes/header.php');
+require_once('./views/pages/includes/nave.php');
 
 global $pageData;
 //var_dump($pageData);
