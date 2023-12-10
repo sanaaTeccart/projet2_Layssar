@@ -91,20 +91,24 @@ class User extends Crud
 
 
 
-    public function updateProfile($userdata)
+    public function updateProfile($userData)
     {
-        // Récupérer l'ID de l'utilisateur actuel
-        $id = $_SESSION['user']['id'];
+        
+        session_start();
+        if (isset($_SESSION['user']['id'])) {
+            $userData['id'] = $_SESSION['user']['id'];
 
-        // Ajoutez l'ID à $userdata
-        $userdata['id'] = $id;
+            // Definir  SQL requet
+            $request = "UPDATE user SET email = :email, username = :username, fname = :fname, lname = :lname, pwd = :pwd WHERE id = :id";
 
-        // Définir la requête SQL
-        $request = "UPDATE user SET email = :email, username = :username, fname = :fname, lname = :lname, pwd = :pwd WHERE id = :id";
-
-        // Appeler la méthode updateById avec la requête et $userdata
-        return parent::updateById($request, $userdata);
+            
+            return $this->updateById($request, $userData);
+        } else {
+           echo "User not logged in.";
+        }
+        header("Location: login");
     }
+
 
 
 

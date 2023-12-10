@@ -192,27 +192,31 @@ class PageController
         }
     }
 
-    
+
 
     public function profile()
     {
 
-        $profileController = new ProfileController;
+ $profileController = new ProfileController;
+        if (isset($_POST['envoyer'])) {
 
-         if (isset($_POST['envoyer'])) {
             // Si le formulaire a été soumis, mettre à jour le profil
-
-            $profile = $profileController->updateProfile($_POST);
-            global $pageData;
-            $pageData = [
-                'profile' => $profile
-            ];
-        } else {
+           $profile= $profileController->updateProfile($_POST);
+           
+        global $userData;
+        $userData = [
+        'profile' =>$profile];
+        }
             // Afficher la page de profil
             $profileController->displayProfile();
-        }
-    }
+        
+
 
 
    
+            
+    header("Location: users");
+    }
+
+    
 }

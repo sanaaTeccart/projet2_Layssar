@@ -8,9 +8,9 @@ require_once('./views/pages/includes/nave.php');
 
 
 
- global $pageData;
+ global $userData;
 
-var_dump($pageData);
+var_dump($userData);
 ?>
 
 <div class="container px-xl-0 px-xxl-3 mt-5">
@@ -19,11 +19,11 @@ var_dump($pageData);
     <div class="col-xl-9">
 
       <h4 class="mb-3">Mon profil </h4>
-      <form   class="row g-3 mb-9" method="POST">
+      <form   class="row g-3 mb-9" method="POST"  action="ProfileController.php">
 
         <div class="col-12">
           <div class="form-floating">
-          <input class="form-control" id="floatingInputEmail" type="email" value="<?php echo isset($pageData['user']['email']) ? $pageData['user']['email'] : ''; ?>" name="email" placeholder="email" />
+          <input class="form-control" id="floatingInputEmail" type="email"  name="email" value="<?php echo isset($userData['user']['email']) ? $userData['user']['email'] : ''; ?>"  placeholder="email" />
 
             <label for="floatingInputEmail">Email</label>
           </div>
@@ -31,27 +31,27 @@ var_dump($pageData);
 
         <div class="col-12">
           <div class="form-floating">
-          <input class="form-control" id="floatingInputEmail" type="text" value="<?php echo isset($pageData['user']['username']) ? $pageData['user']['username'] : ''; ?>" name="username" placeholder="user name" />
+          <input class="form-control" id="floatingInputEmail" type="text"  name="username" value="<?php echo isset($userData['user']['username']) ? $userData['user']['username'] : ''; ?>" placeholder="user name" />
      <label for="floatingInputFirstname">User Name</label>
           </div>
         </div>
     <div class="col-12">
           <div class="form-floating">
-            <input class="form-control" id="floatingInputPhone" type="text" name="fname" value="<?php echo $pageData['user']['fname'] ?>" placeholder="first name" />
+            <input class="form-control" id="floatingInputPhone" type="text" name="fname" value="<?php echo isset($userData['user']['fname']) ? $userData['user']['fname'] : ''; ?>" placeholder="first name" />
             <label for="floatingInputPhone">First Name </label>
           </div>
         </div>
 
         <div class="col-12">
           <div class="form-floating">
-            <input class="form-control" id="floatingInputPhone" type="text" name="fname" value="<?php echo $pageData['user']['lname'] ?>" placeholder="last name" />
+            <input class="form-control" id="floatingInputPhone" type="text" name="lname" value="<?php echo isset($userData['user']['lname']) ? $userData['user']['lname'] : ''; ?>" placeholder="last name" />
             <label for="floatingInputPhone">Last Name </label>
           </div>
         </div>
 
         <div class="col-12">
           <div class="form-floating">
-            <input class="form-control" id="floatingInputPhone" type="password" name="fname" value="<?php echo $pageData['user']['pwd'] ?>" placeholder="password" />
+            <input class="form-control" id="floatingInputPhone" type="password" name="pwd" value="<?php echo isset($userData['user']['pwd']) ? $userData['user']['pwd'] : ''; ?>" placeholder="password" />
             <label for="floatingInputPhone">Password </label>
           </div>
         </div>

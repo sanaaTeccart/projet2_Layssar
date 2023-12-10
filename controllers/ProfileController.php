@@ -4,13 +4,29 @@ require_once('Models/User.php');
 
 class ProfileController
 {
-    public function displayProfile()
-{
-    // Afficher la page de profil avec les informations de l'utilisateur
-    require_once './views/pages/profile.php';
-}
 
-
+        public function displayProfile()
+        {
+            // $userData = [];
+          
+            // if (isset($_POST['envoyer'])) {
+                // Form submitted, retrieve and pass user data directly to the view
+                global $userData;
+                $userData = [
+                    'email' => $_POST['email'] ?? '',
+                    'username' => $_POST['username'] ?? '',
+                    'fname' => $_POST['fname'] ?? '',
+                    'lname' => $_POST['lname'] ?? '',
+                    'pwd' => $_POST['pwd'] ?? '',
+                ];
+               
+           // }
+    
+            // Pass user data to the view
+            require_once './views/pages/profile.php';
+        }
+    
+    
 public function updateProfile($userData)
     {
         try {
