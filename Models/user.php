@@ -109,7 +109,7 @@ class User extends Crud
         header("Location: login");
     }
 
-
+ 
 
 
 
@@ -131,10 +131,7 @@ class User extends Crud
     }
 
 
-    // public function getByBrand($brand) {
-
-    //     return $this->getByOneColumn($this->table, $brand);
-    // }
+ 
 
 
 

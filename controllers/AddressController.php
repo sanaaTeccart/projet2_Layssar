@@ -1,5 +1,13 @@
 <?php
-require_once('Models/User.php');
-    
-   
-            
+class AddressController
+{
+
+
+
+    #get role by Id
+
+    public function getAddressById($id)
+    {
+        //
+    }
+}

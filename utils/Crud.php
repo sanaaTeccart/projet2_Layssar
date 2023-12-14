@@ -2,12 +2,14 @@
 class Crud
 {
     public $connexion;
+
     public function __construct()
     {
         $host = "localhost";
         $db = "ecom2_project";
         $user = "root";
         $password = "";
+        
 
         $dsn = "mysql:host=$host;dbname=$db;charset=UTF8";
 
@@ -38,6 +40,7 @@ class Crud
 
     // methode pour un élément d'une table avec son id 
     public function getById(string $table, int $id): array
+    
     {
         $PDOStatement = $this->connexion->prepare("SELECT * FROM $table WHERE id = :id"); // preparation de rqt sql pour affichage 
         $PDOStatement->bindParam(':id', $id, PDO::PARAM_INT);
@@ -89,30 +92,70 @@ class Crud
     }
 
 
-    public function updateById($request, $itemData)
-    {
-        //requete sql pour modification dans la table itemData 
-        $PDOStatement = $this->connexion->prepare($request);
+    // public function updateById($request, $itemData)
+    // {
+    //     //requete sql pour modification dans la table itemData 
+    //     $PDOStatement = $this->connexion->prepare($request);
         
+    //     foreach ($itemData as $key => $value) {
+    //         if ($key !== 'id') {
+    //             if (is_numeric($value)) {
+    //                 //var_dump('je suis dans mon if ma value est : ' . $value);
+    //                 $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_INT);
+    //             } else if (is_string($value)) {
+    //                 //var_dump('je suis dans mon else ma value est : ' . $value);
+    //                 $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_STR);
+    //             }
+    //         }
+    //     }
+    //     $PDOStatement->bindValue(':id', $itemData['id'], PDO::PARAM_INT);
+    //     try {
+    //         $PDOStatement->execute();
+    //     } catch (PDOException $e) {
+    //         echo 'Erreur d\'exécution de la requête : ' . $e->getMessage();
+    //     }
+    //     //  var_dump($result);
+    // }
+
+
+    public function updateById($table, $itemData)
+    {
+        // Vérifier si la table et les données sont définies
+        if (empty($table) || empty($itemData) || !isset($itemData['id'])) {
+            return false;
+        }
+    
+        $updateColumns = [];
         foreach ($itemData as $key => $value) {
             if ($key !== 'id') {
-                if (is_numeric($value)) {
-                    //var_dump('je suis dans mon if ma value est : ' . $value);
-                    $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_INT);
-                } else if (is_string($value)) {
-                    //var_dump('je suis dans mon else ma value est : ' . $value);
-                    $PDOStatement->bindValue(':' . $key, $value, PDO::PARAM_STR);
-                }
+                $updateColumns[] = "$key = :$key";
             }
         }
+    
+        $updateColumnsString = implode(', ', $updateColumns);
+    
+        $request = "UPDATE $table SET $updateColumnsString WHERE id = :id";
+    
+        $PDOStatement = $this->connexion->prepare($request);
+    
+        foreach ($itemData as $key => $value) {
+            if ($key !== 'id') {
+                $PDOStatement->bindValue(':' . $key, $value, is_numeric($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+            }
+        }
+    
         $PDOStatement->bindValue(':id', $itemData['id'], PDO::PARAM_INT);
+    
         try {
             $PDOStatement->execute();
+            return true;
         } catch (PDOException $e) {
             echo 'Erreur d\'exécution de la requête : ' . $e->getMessage();
+            return false;
         }
-        //  var_dump($result);
     }
+    
+
 
 
 

@@ -2,9 +2,10 @@
 require_once 'ProductController.php';
 require_once 'userController.php';
 require_once 'ProfileController.php';
+require_once 'AddressController.php';
 require_once 'ValidationController.php';
 require_once './utils/Util.php';
-// require_once './utils/authToken.php';
+
 class PageController
 {
     //recuperer les donnees
@@ -39,12 +40,12 @@ class PageController
 
 
 
-
-
     public function cart()
     {
         echo '<h1>Page cart</h1>';
     }
+
+
 
     public function users()
     {
@@ -60,9 +61,7 @@ class PageController
         ];
         // boucle a travers mon tableau de user
 
-
-
-
+  //header("Location: users");
         require_once './views/admin/users.php';
     }
 
@@ -77,6 +76,8 @@ class PageController
 
         header("Location: users");
     }
+
+
 
     public function signup()
     {
@@ -194,29 +195,49 @@ class PageController
 
 
 
-    public function profile()
+
+
+
+
+
+    public function profile($id)
     {
-
- $profileController = new ProfileController;
         if (isset($_POST['envoyer'])) {
+            $userData = [
+                'email' => $_POST['email'] ?? '',
+                'username' => $_POST['username'] ?? '',
+                'fname' => $_POST['fname'] ?? '',
+                'lname' => $_POST['lname'] ?? '',
+                'pwd' => $_POST['pwd'] ?? '',
 
-            // Si le formulaire a été soumis, mettre à jour le profil
-           $profile= $profileController->updateProfile($_POST);
-           
-        global $userData;
-        $userData = [
-        'profile' =>$profile];
+            ];
+
+            global $userData;
+            $oProfile = new ProfileController;
+            $oProfile->updateProfile($userData);
+        } else {
+
+
+            $oProfile = new ProfileController;
+            $profile = $oProfile->getProfileById($id);
+
+            $oAddress = new AddressController;
+            $billing_address = $oAddress->getaddressById($profile['billing_address']);
+            $shipping_address = $oAddress->getaddressById($profile['shipping_address']);
+
+            global $viewData;
+            $viewData = [
+                'profile' => $profile,
+                'billing_address' => $billing_address,
+                'shipping_address' => $shipping_address,
+
+            ];
+            require('./views/pages/profile.php');
         }
-            // Afficher la page de profil
-            $profileController->displayProfile();
-        
 
 
 
-   
-            
-    header("Location: users");
+
+        $oProfile->displayProfile($id);
     }
-
-    
 }

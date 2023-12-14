@@ -16,10 +16,6 @@ switch ($explodeUrl[3]) {
 
         break;
 
-        // case 'product':
-        //     $page = new PageController;
-        //     $page->product($id);
-        //     break;
 
     case 'product':
  // Récupérer l'ID du produit à partir de la requête GET
@@ -60,6 +56,7 @@ switch ($explodeUrl[3]) {
 
             if ($userId) {
                 $page->deleteUserById($explodeUrl[4]);
+                echo " je suis dans user ";
             } else {
                 $page->users();
             }
@@ -68,11 +65,11 @@ switch ($explodeUrl[3]) {
 
     case 'user':
 
-        $productId = isset($explodeUrl[4]) ? $explodeUrl[4] : null;
+        $userId = isset($explodeUrl[4]) ? $explodeUrl[4] : null;
         if ($userId) {
             $page = new PageController;
             $page->users($userId);
-            // echo " je suis dans user ";
+             echo " je suis dans users ";
         } else {
             echo "UserID is missing.";
         }
@@ -87,10 +84,22 @@ switch ($explodeUrl[3]) {
 
 
     case 'profile':
-        $page = new PageController;
-        $page->profile();
+            // Récupérer l'ID du user à partir de la requête GET
+                   $id = isset($explodeUrl[4]) ? $explodeUrl[4] : null;
+                   if ($id) {
+                       $page = new PageController;
+                       $page->profile($id);
+                        //echo " je suis dans profile";
+                   } else {
+                       echo "Profile ID is missing.";
+                   }
+           
+                   break;
 
-        break;
+        // $page = new PageController;
+        // $page->profile();
+
+        // break;
 
 
     default:

@@ -1,3 +1,6 @@
+<?php
+//var_dump($_SESSION);
+?>
 <section class="py-0">
 
   <div class="container-small">
@@ -9,8 +12,8 @@
             </a></div>
           <div class="col-auto order-md-1">
             <ul class="navbar-nav navbar-nav-icons flex-row me-n2">
-              <li class="nav-item d-flex align-items-center">
-                <!-- <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link ps-0 active" href="signup">sginup</a></li>
+              <!-- <li class="nav-item d-flex align-items-center">
+                <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link ps-0 active" href="signup">sginup</a></li>
            <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="login">login</a></li> -->
                 <div class="theme-control-toggle fa-icon-wait px-2">
                   <input class="form-check-input ms-0 theme-control-toggle-input" type="checkbox" data-theme-control="phoenixTheme" value="dark" id="themeControlToggle" />
@@ -33,7 +36,7 @@
 
               <?php
 
-              if (isset($_SESSION['cart'])) { ?>
+               if(isset($_SESSION['auth']['cart'])){ ?>
                 <li class="nav-item"><a class="nav-link px-2 icon-indicator icon-indicator-primary" href="cart" role="button"><span class="text-700" data-feather="shopping-cart" style="height:20px;width:20px;"></span><span class="icon-indicator-number"><?php echo $nbrElement; ?></span></a></li>
 
               <?php }
@@ -44,10 +47,7 @@
 
 
 
-
-
-
-              <li class="nav-item dropdown"><a class="nav-link px-2" id="navbarDropdownUser" href="profile" role="button"><span class="text-700" data-feather="user" style="height:20px;width:20px;"></span></a>
+ <li class="nav-item dropdown"><a class="nav-link px-2" id="navbarDropdownUser" href="profile/<?php echo isset($_SESSION['auth']['user_id'])? $_SESSION['auth']['user_id']:""; ?>" role="button"><span class="text-700" data-feather="user" style="height:20px;width:20px;"></span></a>
                 <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300 mt-2" aria-labelledby="navbarDropdownUser">
                   <div class="card position-relative border-0">
                     <div class="card-body p-0">
@@ -111,10 +111,11 @@
     <ul class="navbar-nav justify-content-end align-items-center">
       <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link ps-0 active" href="products">Home</a></li>
 
-      <?php if (isset($_SESSION['role_id']) && $_SESSION['role_id'] == 3) { ?> <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="cart">Mes commandes</a></li>
-      <?php }
+      <?php if ( $_SESSION['auth']['user_id'] && $_SESSION['auth']['role_id'] == 3) { ?> <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="cart">Mes commandes</a></li>
+
+      <?php }  
       ?>
-      <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href=".php"></a></li>
+      <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="cart"></a></li>
       <?php if (isset($_SESSION['cart'])) { ?> <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="cart">Checkout</a></li>
       <?php }
       ?>

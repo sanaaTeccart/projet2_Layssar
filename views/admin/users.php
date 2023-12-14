@@ -1,16 +1,16 @@
 <?php
-session_start();
+//session_start();
 require_once('./views/pages/includes/header.php');
 require_once('./views/pages/includes/nave.php');
 
 //definir la requete
 global $pageData;
-//var_dump($pageData['users']);
-var_dump($_SESSION);
+var_dump($pageData['users']);
+
 
 
 // Vérifier si l'utilisateur est administrateur
-if (isset($_SESSION['auth']['role_id']) && $_SESSION['auth']['role_id'] != 3) {
+if( isset($_SESSION['auth']['role_id']) && ($_SESSION['auth']['role_id'] === 2 || $_SESSION['auth']['role_id'] === 1)) {
 ?>
     <main class="mt-5">
 
@@ -56,7 +56,7 @@ if (isset($_SESSION['auth']['role_id']) && $_SESSION['auth']['role_id'] != 3) {
                                     <div class="d-inline">
                                         <form method="post" action="?id=<?php echo $user['id']; ?>">
 
-                                            <button type="submit" class="btn btn-danger" name="deleteUser">Supprimer</button>
+                                            <!-- <button type="submit" class="btn btn-danger" name="deleteUser">Supprimer</button> -->
                                         </form>
                                         <a href="users/<?php echo $user['id']; ?>">Supprimer</a>
                                     </div>

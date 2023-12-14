@@ -2,14 +2,7 @@
 require_once('Models/User.php');
 class UserController
 {
-  #get all users
-  // public function getAllUsers()
-  // {
-  //   $objUser = new User;
-  //   return $objUser->getUsers();
-  // }
-
-  #get user by id
+ 
   public function getUserById($userId)
   {
     $objUser = new User;
@@ -17,7 +10,7 @@ class UserController
     if (session_status() == PHP_SESSION_NONE) {
       session_start();
     }
-    $userId = $_SESSION['user']['id'];
+    $userId = $_SESSION['auth']['user_id'];
     return $objUser->getUserById($userId);
   }
 
@@ -97,7 +90,7 @@ class UserController
   public function getAllUsers()
   {
     // Récupérer l'ID de l'utilisateur actuel 
-    $userId = $_SESSION['user']['id'] ?? null;
+    $id = $_SESSION['user']['id'] ?? null;
 
     // Instancier le modèle utilisateur
     $oUser = new User();
@@ -105,16 +98,16 @@ class UserController
 
 
 
-    // Vérifier si l'utilisateur est administrateur
-    /* if ($validationController->validateUserRole($userId)) {
-       // Récupérer la liste des utilisateurs
-       $pageData['users'] = $user->getUsers();
+  //   // Vérifier si l'utilisateur est administrateur
+  //    if ($validationController->validateUserRole($id)) {
+  //      // Récupérer la liste des utilisateurs
+  //      $pageData['users'] = $user->getUsers();
 
-       // Passer la liste des utilisateurs à la vue
-       include_once './views/usersList.php'; // Vous devez créer la vue correspondante
-   } else {
-       // Rediriger ou afficher un message d'erreur si l'utilisateur n'a pas les autorisations nécessaires
-       echo 'Vous n\'avez pas les autorisations nécessaires pour afficher la liste des utilisateurs.';
-   } */
+  //      // Passer la liste des utilisateurs à la vue
+  //      include_once './views/usersList.php'; // Vous devez créer la vue correspondante
+  //  } else {
+  //      // Rediriger ou afficher un message d'erreur si l'utilisateur n'a pas les autorisations nécessaires
+  //      echo 'Vous n\'avez pas les autorisations nécessaires pour afficher la liste des utilisateurs.';
+  //  } 
   }
 }
