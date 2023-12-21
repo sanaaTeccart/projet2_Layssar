@@ -39,6 +39,21 @@ class PageController
     }
 
 
+    // public function order_has_product()
+    // {
+    //     $objOrder_has_productController = new  Order_has_productController;
+    //     $commandes= $objOrder_has_productController->getAllCommandes();
+        
+
+    //     global $pageData;
+
+    //     $pageData = [
+    //         'order_has_product' =>  $commandes
+    //     ];
+    //     require('./views/admin/order_has_product.php');
+
+    // }
+
 
     public function cart()
     {
@@ -170,7 +185,7 @@ class PageController
 
 
                 if ($_SESSION['auth']['role_id'] != 3) {
-                    header("Location: users");
+                    header("Location: order_has_product");
                 } else {
                     header("Location: products");
                     //require_once './views/pages/products.php';
@@ -221,15 +236,15 @@ class PageController
             $oProfile = new ProfileController;
             $profile = $oProfile->getProfileById($id);
 
-            $oAddress = new AddressController;
-            $billing_address = $oAddress->getaddressById($profile['billing_address']);
-            $shipping_address = $oAddress->getaddressById($profile['shipping_address']);
+           // $oAddress = new AddressController;
+           // $billing_address = $oAddress->getaddressById($profile['billing_address']);
+            //$shipping_address = $oAddress->getaddressById($profile['shipping_address']);
 
             global $viewData;
             $viewData = [
                 'profile' => $profile,
-                'billing_address' => $billing_address,
-                'shipping_address' => $shipping_address,
+                // 'billing_address' => $billing_address,
+                // 'shipping_address' => $shipping_address,
 
             ];
             require('./views/pages/profile.php');
@@ -240,4 +255,20 @@ class PageController
 
         $oProfile->displayProfile($id);
     }
+
+
+public function getaddressById($id){
+
+   
+    $objAddressController = new AddressController;
+    $address = $objAddressController->getaddressById($id);
+
+    global $pageData;
+    $pageData = [
+        'address' => $address
+    ];
+    require('./views/pages/product.php');
+} 
 }
+
+

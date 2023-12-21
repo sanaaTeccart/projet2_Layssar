@@ -3,7 +3,7 @@
 
 // isAuthenticated();
 // //executer la requete()
-// $prixTotals=0;
+//$prixTotals=0;
 
 // $paniers = getAllPanier();
 
@@ -11,6 +11,11 @@
 // include "./includes/header1.php";
 // include "./includes/nav.php";
 
+
+require_once('./views/pages/includes/header.php');
+require_once('./views/pages/includes/nave.php');
+
+global $pageData;
 
 ?>
 
@@ -27,7 +32,7 @@
           <div class="row g-5">
           
             <div class="col-12 col-lg-9">
-              <div id="cartTable" data-list='{"valueNames":["products","color","size","price","quantity","total"],"page":10}'>
+              <div id="cartTable" data-list='{"valueNames":["products","price","quantity","total"],"page":10}'>
                 <div class="table-responsive scrollbar mx-n1 px-1">
                   <table class="table fs--1 mb-0 border-top border-200">
                     <thead>
@@ -62,20 +67,20 @@
 
                       <tr class="cart-table-row btn-reveal-trigger">
                         <td class="align-middle white-space-nowrap py-0">
-                          <div class="border rounded-2"><img src="images/<?php echo $voiture['url_img']; ?>" alt="" width="53" /></div>
+                          <div class="border rounded-2"><img src="images/<?php echo $pageData['product']['url_img']; ?>" alt="" width="53" /></div>
                         </td>
                         
 
                         
-                        <td class="products align-middle"><a class="fw-semi-bold mb-0 line-clamp-2" href="#!"><?php echo $voiture['marque']; ?></a></td>
-                        <td class="color align-middle white-space-nowrap fs--1 text-900"><?php echo $voiture['model']; ?></td>
-                        <td class="size align-middle white-space-nowrap text-700 fs--1 fw-semi-bold"><?php echo $voiture['prix']; ?></td>
-                        <td class="price align-middle text-900 fs--1 fw-semi-bold text-end"><?php echo $voiture['Annee']; ?></td>
+                        <td class="products align-middle"><a class="fw-semi-bold mb-0 line-clamp-2" href="#!"><?php echo $pageData['product']['name']; ?></a></td>
+                        <td class="color align-middle white-space-nowrap fs--1 text-900"><?php echo $pageData['product']['color']; ?></td>
+                        <td class="size align-middle white-space-nowrap text-700 fs--1 fw-semi-bold"><?php echo$pageData['product']['price']; ?></td>
+                        <td class="price align-middle text-900 fs--1 fw-semi-bold text-end"><?php echo $product['Annee']; ?></td>
                         <td class="quantity align-middle fs-0 ps-5"><?php echo  $quantite; ?>
                         </td>
-                        <td class="total align-middle fw-bold text-1000 text-end"><?php echo  prixTotal($voiture['prix'],$quantite)?></td>
+                        <td class="total align-middle fw-bold text-1000 text-end"><?php echo $prixTotal($product['price'],$quantite)?></td>
                         <td class="align-middle white-space-nowrap text-end pe-0 ps-3">
-                        <a href="supprimerPanier.php?id=<?php echo $voiture['idVoiture']; ?>" ><button class="btn btn-sm text-500 hover-text-600 me-2"><span class="fas fa-trash"></span></button></a>
+                        <a href="supprimerPanier.php?id=<?php echo $product['id']; ?>" ><button class="btn btn-sm text-500 hover-text-600 me-2"><span class="fas fa-trash"></span></button></a>
                         </td>
                       </tr>
                       <?php } ?>

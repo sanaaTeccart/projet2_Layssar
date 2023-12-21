@@ -16,6 +16,14 @@ switch ($explodeUrl[3]) {
 
         break;
 
+        // case 'order_has_product':
+
+        //     $page = new PageController;
+        //    $page->order_has_product();
+    
+            // break;
+    
+ 
 
     case 'product':
  // Récupérer l'ID du produit à partir de la requête GET
@@ -52,11 +60,12 @@ switch ($explodeUrl[3]) {
     case 'users':
         $page = new PageController;
         $userId = isset($explodeUrl[4]) ? $explodeUrl[4] : null;
-        if (isset($_SESSION['auth']['role_id']) && ($_SESSION['auth']['role_id'] === 2 || $_SESSION['auth']['role_id'] === 1)) {
+        if (isset($_SESSION['auth']['role_id']) && ($_SESSION['auth']['role_id'] === 2 || $_SESSION['auth']['role_id'] === 1))
+         {
 
             if ($userId) {
                 $page->deleteUserById($explodeUrl[4]);
-                echo " je suis dans user ";
+                echo " je suis dans users ";
             } else {
                 $page->users();
             }
@@ -69,7 +78,7 @@ switch ($explodeUrl[3]) {
         if ($userId) {
             $page = new PageController;
             $page->users($userId);
-             echo " je suis dans users ";
+             echo " je suis dans user ";
         } else {
             echo "UserID is missing.";
         }

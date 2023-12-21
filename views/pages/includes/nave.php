@@ -111,10 +111,10 @@
     <ul class="navbar-nav justify-content-end align-items-center">
       <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link ps-0 active" href="products">Home</a></li>
 
-      <?php if ( $_SESSION['auth']['user_id'] && $_SESSION['auth']['role_id'] == 3) { ?> <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="cart">Mes commandes</a></li>
+      <!-- <?php if ( $_SESSION['auth']['user_id'] && $_SESSION['auth']['role_id'] == 3) { ?> <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="cart">Mes commandes</a></li>
 
       <?php }  
-      ?>
+      ?> -->
       <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="cart"></a></li>
       <?php if (isset($_SESSION['cart'])) { ?> <li class="nav-item" data-nav-item="data-nav-item"><a class="nav-link pe-0" href="cart">Checkout</a></li>
       <?php }

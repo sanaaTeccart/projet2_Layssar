@@ -8,25 +8,94 @@
       <div class="collapse navbar-collapse" id="navbarsExample07">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+            <a class="nav-link active" aria-current="page" href="product">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Voitures</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown07">
-              <li><a class="dropdown-item" href="ajoutervoiture.php" target="contentFrame">Nouveau</a></li>
-              <li><a class="dropdown-item" href="index.php">Mes voitures</a></li>
+              <!-- <li><a class="dropdown-item" href="ajoutervoiture.php" target="contentFrame">Nouveau</a></li> -->
+              <li><a class="dropdown-item" href="user_order.php">Mes voitures</a></li>
              
             </ul>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Clients</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown07">
-              <li><a class="dropdown-item" href="mesclients.php">Mes clients</a></li>
+              <li><a class="dropdown-item" href="users">Mes clients</a></li>
              
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="commandes.php">Commandes</a>
+            <a class="nav-link active" aria-current="page" href="user_order `1q
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            .php">Commandes</a>
           </li>
 
         </ul>
@@ -36,7 +105,7 @@
 
 
         <div class="text-end">
-        <a class="navbar-brand fs-14" href="#"><?php echo $_SESSION['email']; ?> </a>
+        <a class="navbar-brand fs-14" href="#"><?php echo $_SESSION['auth']['email']; ?> </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>

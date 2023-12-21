@@ -1,23 +1,12 @@
-<?php 
 
-//isAuthenticated();
-//executer la requete()
+<?php
+require_once('./views/pages/includes/header.php');
+require_once('./views/admin/includes/nav.php');
 
-$commandes =getAllCommande();
-
-
-
-
-
-
-
-
-// var_dump($commandes);
-
-// $mesvoitures=getAllCommande();
-include "./includes/header.php";
-include "./includes/nav.php";
+global $pageData;
+//var_dump($pageData);
 ?>
+
 
 <div class="container-small">
 
@@ -34,7 +23,7 @@ include "./includes/nav.php";
                     <th scope="col" style="width: 24px;"></th>
                     <th scope="col" style="min-width: 60px;">Numero</th>
                     <th scope="col" style="min-width: 60px;">Date</th>
-                    <!-- <th scope="col" style="min-width: 60px;">Quantite</th> -->
+                  <th scope="col" style="min-width: 60px;">Quantite</th>
                     <th class="ps-5" scope="col" style="min-width: 150px;">Prix Total</th>
                     <th class="ps-5" scope="col" style="min-width: 150px;">Client</th>
                     <th scope="col" style="width: 24px;"></th>
@@ -47,18 +36,19 @@ include "./includes/nav.php";
 
 
 
-                <?php  foreach ($commandes as $commande) { ?>
+                <?php  foreach ($pageData['order_has_product'] as $commande) { ?>
 
 
                   <tr>
                     <td class="border-0"></td>
-                    <td class="align-middle"><?php echo $commande['idcommande']; ?></td>
+                    <td class="align-middle"><?php echo $commande['user_order_id']; ?></td>
                     <td class="align-middle">
-                      <p class="line-clamp-1 mb-0 fw-semi-bold"><?php echo $commande['date_commande']; ?></p>
+                      <p class="line-clamp-1 mb-0 fw-semi-bold"><?php echo $commande['product_id']; ?></p>
                     </td>
-                    <!-- <td class="align-middle ps-5"><?php echo $commande['quantiteDemande']; ?></td> -->
-                    <td class="align-middle ps-5"><?php echo $commande['prixTotal']; ?></td>
-                    <td class="align-middle ps-5"><?php echo $commande['email']; ?></td>
+                   <td class="align-middle ps-5"><?php echo $commande['qtty']; ?>
+                   <td class="align-middle ps-5"><?php echo $commande['price	']; ?></td> 
+                   <td class="align-middle ps-5"><?php echo $commande['prixTotal']; ?></td>
+                   
                     <td class="border-0"></td>
                   </tr>
                   <?php 

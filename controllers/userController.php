@@ -50,42 +50,6 @@ class UserController
 
 
 
-  /* function getUser($userdata)
-  {
-    $objUser = new User;
-
-    //appeler la methode add avec la requet et userdata
-    return $objUser->getUser($userdata);
-  } */
-
-
-
-
-
-  #update profile
-  // public function modifierProfile($request,$userData)
-  //   {
-  //   //     // Récupérer l'ID de l'utilisateur actuel
-  //   //     $id = $_SESSION['user']['id'];
-
-
-  //   //     // Ajouter l'ID à $userData
-  //   //     $userData['id'] = $id;
-
-  //   //     $objUser = new User;
-
-  //   //     // Appeler la méthode updateProfile avec la requête et $userData
-  //   //     return $objUser->modifierProfile($userData);
-  //         $objUser = new User;
-  //     return $objUser->updateById($request, $itemData);
-
-  //       // Redirection ou affichage de la page de profil
-
-  //   }
-
-
-
-
 
   public function getAllUsers()
   {

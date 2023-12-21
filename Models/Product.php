@@ -41,20 +41,20 @@ class Product extends Crud  {
         
         {
             $this->name = $productdata['name'];
-            /* $productdata = [
+             $productdata = [
                 
-                'name' => $this->brand,
-                'qtty' => $this->type,
-                'price' => $this->model,
-                'url_img' => $this->price,
+                'name' => $this->name,
+                'qtty' => $this->qtty,
+                'price' => $this->price,
+                'url_img' => $this->url_img,
                 'description' =>$this->description,
                 'id' => $this->id 
-            ]; */
+            ]; 
 
-           // var_dump($productdata);
-            // echo'</br></br>';
-            // $request = "UPDATE product SET name = :name, qtty = :qtty, price = :price, url_img = :url_img, description = :description  WHERE id = :id";
-            //parent::updateById($request, $productdata);
+           var_dump($productdata);
+            echo'</br></br>';
+            $request = "UPDATE product SET name = :name, qtty = :qtty, price = :price, url_img = :url_img, description = :description  WHERE id = :id";
+            parent::updateById($request, $productdata);
         }
     
         public function deleteProduct($id)

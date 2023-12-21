@@ -91,10 +91,10 @@ class ValidationController
 
             // Récupérer le rôle par son ID
             $roleData = $role->getRoleById($id);
-            var_dump($roleData);
+           // var_dump($roleData);
 
             // Vérifier si le rôle est administrateur
-            return $roleData !== null && $roleData['name'] === 'admin';
+            return $roleData !== null && $roleData['id'] === 1 && $$roleData['id']===2;
         } else {
 
             return false;

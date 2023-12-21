@@ -5,7 +5,7 @@ require_once('./views/pages/includes/nave.php');
 
 //definir la requete
 global $pageData;
-var_dump($pageData['users']);
+//var_dump($pageData['users']);
 
 
 
